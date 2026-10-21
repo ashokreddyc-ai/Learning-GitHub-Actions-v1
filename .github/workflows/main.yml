@@ -1,26 +1,56 @@
+
 name: my-first-workflow
-on: 
+
+on:
   push:
-    
+
 jobs:
   job1:
     name: JOB1
     runs-on: ubuntu-22.04
+
     steps:
-      - name: step-1
+      - name: Step 1 - Checkout
+        uses: actions/checkout@v7
+
+      - name: Step 2 - Check runner details
         run: |
           pwd
           ls -ltr
           hostname
-      - name: step-2 Checkout
-        uses: actions/checkout@v7
-      - name: step-3 
+
+      - name: Step 3 - Create artifact files
         run: |
-          echo 'pwd' >> myartifact.txt 
-          ls -ltr
-          hostname
+          pwd > myartifact.txt
+          mkdir -p artifacts
+          ls -ltr > artifacts/list.txt
+          hostname > artifacts/hostname.txt
+
       - name: Upload single file
         uses: actions/upload-artifact@v4
         with:
-          name: single_file
-          path: ./myartifact.txt 
+          name: single-file
+          path: myartifact.txt
+
+      - name: Upload directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: directory-artifacts
+          path: artifacts/
+
+      - name: Upload multiple paths
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiple-paths
+          path: |
+            myartifact.txt
+            artifacts/
+
+      - name: Upload multiple paths with exclusions
+        uses: actions/upload-artifact@v4
+        with:
+          name: multiple-paths-excluded
+          path: |
+            myartifact.txt
+            artifacts/
+            !artifacts/hostname.txt
