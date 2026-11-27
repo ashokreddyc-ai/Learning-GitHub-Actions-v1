@@ -73,3 +73,23 @@ jobs:
         run: |
           pwd
           ls -ltr
+          
+  job3:
+    name: JOB3
+    runs-on: ubuntu-22.04
+    needs: job1 # Ensures job2 waits for job1 to complete successfully
+    steps:
+      - name: Checking current directory
+        run: |
+          pwd
+          ls -ltr
+
+      - name: Downloading direct artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: directory-artifacts # Matches the artifact name uploaded in job1
+
+      - name: Checking current directory post download
+        run: |
+          pwd
+          ls -ltr
