@@ -65,7 +65,7 @@ jobs:
       - name: downloding single atrifacts
         uses: actions/download-artifact@v8
         with:
-          name: single-file
+          name: single_file
           
       - name: checking current directorr post downlod
         run: |
