@@ -54,3 +54,20 @@ jobs:
             myartifact.txt
             artifacts/
             !artifacts/hostname.txt
+  job2:
+    name: JOB2
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checking current directory
+        run: |
+          pwd
+          ls -ltr
+      - name: downloding single atrifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: single-file
+          
+      - name: checking current directorr post downlod
+        run: |
+          pwd
+          ls -ltr
